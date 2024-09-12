@@ -13,22 +13,36 @@ namespace leave_mgt.Repository
         }
         public bool Create(LeaveAllocation entity)
         {
-            throw new NotImplementedException();
+            _db.LeaveAllocations.Add(entity);
+            //Save
+            return Save();
+
+            //throw new NotImplementedException();
         }
 
         public bool Delete(LeaveAllocation entity)
         {
-            throw new NotImplementedException();
+            _db.LeaveAllocations.Remove(entity);
+            //Save
+            return Save();
+
+            //throw new NotImplementedException();
         }
 
         public ICollection<LeaveAllocation> FindAll()
         {
-            throw new NotImplementedException();
+            var LeaveAllocation = _db.LeaveAllocations.ToList();
+            return LeaveAllocation;
+
+            //throw new NotImplementedException();
         }
 
         public LeaveAllocation FindById(int id)
         {
-            throw new NotImplementedException();
+            var LeaveAllocation = _db.LeaveAllocations.Find(id);
+            return LeaveAllocation;
+
+            //throw new NotImplementedException();
         }
 
         public ICollection<LeaveAllocation> GetEmployeesByLeaveType(int id)
@@ -36,14 +50,32 @@ namespace leave_mgt.Repository
             throw new NotImplementedException();
         }
 
+        public bool isExists(int id)
+        {
+            /*
+             check if LeaveAllocation table is empty or not and if (there is an Id that matches the paremeter "id",
+            then return true or false
+             */
+            var exists = _db.LeaveAllocations.Any(q => q.Id == id);
+            return exists;
+            //throw new NotImplementedException();
+        }
+
         public bool Save()
         {
-            throw new NotImplementedException();
+            var changes = _db.SaveChanges();
+            return changes > 0;
+
+            //throw new NotImplementedException();
         }
 
         public bool Update(LeaveAllocation entity)
         {
-            throw new NotImplementedException();
+            _db.LeaveAllocations.Update(entity);
+            //Save
+            return Save();
+
+            //throw new NotImplementedException();
         }
     }
 }

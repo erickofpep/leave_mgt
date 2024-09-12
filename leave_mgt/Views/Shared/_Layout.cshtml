@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Core Leave Management</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css" />    
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/leave_mgt.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    
 </head>
 <body>
     <header>
@@ -23,14 +26,14 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="" title="Apply For Leave">Apply For Leave</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Manage">
                                 Manage
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#" title="Leave Types">Leave Types</a></li>
+                                <li><a class="dropdown-item" title="Leave Types" asp-controller="LeaveTypes" asp-action="Index">Leave Types</a></li>
                                 <li><a class="dropdown-item" href="#" title="Leave Allocations">Leave Allocations</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#" title="Leave Applications">Leave Applications</a></li>
@@ -56,7 +59,9 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//cdn.datatables.net/2.1.5/js/dataTables.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>    
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

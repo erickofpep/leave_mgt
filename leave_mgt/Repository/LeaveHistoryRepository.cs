@@ -11,24 +11,39 @@ namespace leave_mgt.Repository
         {
             _db = db;
         }
+
         public bool Create(LeaveHistory entity)
         {
-            throw new NotImplementedException();
+            _db.LeaveHistories.Add(entity);
+            //Save
+            return Save();
+
+            //throw new NotImplementedException();
         }
 
         public bool Delete(LeaveHistory entity)
         {
-            throw new NotImplementedException();
+            _db.LeaveHistories.Remove(entity);
+            //Save
+            return Save();
+
+            //throw new NotImplementedException();
         }
 
         public ICollection<LeaveHistory> FindAll()
         {
-            throw new NotImplementedException();
+            var LeaveHistory = _db.LeaveHistories.ToList();
+            return LeaveHistory;
+
+            //throw new NotImplementedException();
         }
 
         public LeaveHistory FindById(int id)
         {
-            throw new NotImplementedException();
+            var LeaveHistory = _db.LeaveHistories.Find(id);
+            return LeaveHistory;
+
+            //throw new NotImplementedException();
         }
 
         public ICollection<LeaveHistory> GetEmployeesByLeaveType(int id)
@@ -36,14 +51,33 @@ namespace leave_mgt.Repository
             throw new NotImplementedException();
         }
 
+        public bool isExists(int id)
+        {
+            /*
+             check if LeaveHistory table is empty or not and if (there is an Id that matches the paremeter "id",
+            then return true or false
+             */
+            var exists = _db.LeaveHistories.Any(q => q.Id == id);
+            return exists;
+
+            //throw new NotImplementedException();
+        }
+
         public bool Save()
         {
-            throw new NotImplementedException();
+            var changes = _db.SaveChanges();
+            return changes > 0;
+
+            //throw new NotImplementedException();
         }
 
         public bool Update(LeaveHistory entity)
         {
-            throw new NotImplementedException();
+            _db.LeaveHistories.Update(entity);
+            //Save
+            return Save();
+
+            //throw new NotImplementedException();
         }
     }
 }
