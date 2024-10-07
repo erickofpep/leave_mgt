@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,6 +31,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="" title="Apply For Leave">Apply For Leave</a>
                         </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            if(User.IsInRole("Administrator") ){
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Manage">
                                 Manage
@@ -40,6 +46,8 @@
                                 <li><a class="dropdown-item" href="#" title="Employees">Employees</a></li>
                             </ul>
                         </li>
+                            }
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

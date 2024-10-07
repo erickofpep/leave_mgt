@@ -1,3 +1,4 @@
+using leave_mgt;
 using leave_mgt.Contracts;
 using leave_mgt.Data;
 using leave_mgt.Mappings;
@@ -26,13 +27,40 @@ builder.Services.AddAutoMapper(typeof(Maps));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+//This enables Account confirmation through email after registering
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
+//This is disables Account confirmation through email after registering
+builder.Services.AddDefaultIdentity<IdentityUser>().
+    AddRoles<IdentityRole>().
+    AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+// Ensure the roles are created when the app starts
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    //await RoleSeeder.SeedRolesAsync(roleManager);
+    SeedData.Seed(userManager, roleManager);
+}
+/*
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    //await SeedRolesAsync(roleManager);
+
+    await RoleSeeder.SeedRolesAsync(roleManager);
+}
+*/
+
 // Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -45,11 +73,16 @@ else
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
+app.MapControllers();
+
+
+//SeedData.Seed(userManager, roleManager);
 
 app.MapControllerRoute(
     name: "default",

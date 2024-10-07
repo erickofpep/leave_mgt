@@ -2,10 +2,12 @@
 using leave_mgt.Contracts;
 using leave_mgt.Data;
 using leave_mgt.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace leave_mgt.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class LeaveTypesController : Controller
     {
         private readonly ILeaveTypeRepository _repo;
@@ -16,6 +18,7 @@ namespace leave_mgt.Controllers
             _repo = repo;
             _mapper = mapper;
         }
+
 
         // GET: LeaveTypesController1
         public ActionResult Index()
@@ -107,6 +110,7 @@ namespace leave_mgt.Controllers
                     return View(model);
                 }
                 var leaveType = _mapper.Map<LeaveType>(model);
+                leaveType.DateUpdated = DateTime.Now;
                 var isSuccess = _repo.Update(leaveType);
                 if (!isSuccess)
                 {
